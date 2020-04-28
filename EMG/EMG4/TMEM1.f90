@@ -270,16 +270,6 @@
 
  8902 FORMAT(' Row ',I2,/,9(1ES14.6))
 
- 9100 FORMAT(14X,'Check on strain-displacement matrix BM for membrane portion of the element in subr BCHECK'/)
-
- 9101 FORMAT(63X,'S T R A I N S'/,62X,'(direct strains)',)
-
- 9102 FORMAT('                                                     Exx            Eyy            Exy')
-
- 9103 FORMAT(7X,'Element displacements consistent with:')
-
- 9104 FORMAT(7X,'---------------------------------------')
-
 ! **********************************************************************************************************************************
 
       END SUBROUTINE TMEM1

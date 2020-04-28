@@ -125,7 +125,7 @@
 
 ! Open SC1 with carriage control (that will validate use of the "+" in my write to screen in ?2345 FORMAT statements)
 
-      OPEN(SC1,CARRIAGECONTROL='FORTRAN')
+      OPEN(SC1)
 
 ! Set time initializing parameters
 
@@ -485,7 +485,7 @@ iters:      DO
       CALL VECTOR_NORM ( UG_COL, NDOFG, NL_NORM, UG_NORM(LOAD_ISTEP,NL_ITER_NUM), IERR )
       IF (NL_ITER_NUM > 1) THEN
 !zzzz    IF (DABS(UG_NORM(LOAD_ISTEP,NL_ITER_NUM-1)) > EPS1) THEN
-            PERCENT_CHANGE(LOAD_ISTEP,NL_ITER_NUM) = 1.0D2*(UG_NORM(LOAD_ISTEP,NL_ITER_NUM) - UG_NORM(LOAD_ISTEP,NL_ITER_NUM-1))    &
+            PERCENT_CHANGE(LOAD_ISTEP,NL_ITER_NUM) = 1.0D2*(UG_NORM(LOAD_ISTEP,NL_ITER_NUM) - UG_NORM(LOAD_ISTEP,NL_ITER_NUM-1))   &
                                                     /UG_NORM(LOAD_ISTEP,NL_ITER_NUM-1)
 !zzzz    ELSE
 !zzzz       IF (DABS(UG_NORM(LOAD_ISTEP,NL_ITER_NUM) - UG_NORM(LOAD_ISTEP,NL_ITER_NUM-1)) > EPS1) THEN

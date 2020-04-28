@@ -245,6 +245,10 @@
 ! B////////////////////////////////////////////////////////////////////B
       SUBROUTINE BANDIT ( MYSTRAN_NGRID, NEW_BW, DEN, IER )
       USE IOUNT1, ONLY :  WRT_LOG, IN1
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD,
+     &                              MA,NUM,MB,
+     &                              NTYPE,VYPE,TYPE,WYPE,ME,NELEM,MDIM,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 ! E////////////////////////////////////////////////////////////////////E
 c
 c     Gordon C. Everstine, Gaithersburg, MD, geversti@comcast.net
@@ -338,22 +342,15 @@ C
      &         IPARAM ,IPASS  ,ISTA   ,ISTART ,II1    ,II3    ,IWALL1 ,
      &         IWALL2
        
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
-      
       INTEGER  K1     ,K2     ,K3     ,K4     ,K5     ,K6     ,K7     ,
-     &         K8     ,K9     ,KDIM4  ,KDIM   ,KMOD   ,KNEW   ,KORE   ,
-     &         KORIG
+     &         K8     ,K9     ,KDIM4  ,KDIM   ,KNEW   ,KORE   ,KORIG
       
       INTEGER  LINES
       
-      INTEGER  MA     ,MB     ,MAXDEG ,MAXGRD ,MINDEG ,MDIM   ,ME     ,
-     &         MM
+      INTEGER  MINDEG ,MM
       
-      INTEGER  NAXIC  ,NBITIN ,NBYTE  ,NCM    ,NEDGE  ,NEL    ,NELEM  ,
-     &         NEQ    ,NEQR   ,NGRID  ,NLINK  ,NN     ,NW     ,NTYPE  ,
-     &         NUM    ,NZERO
+      INTEGER  NAXIC  ,NBITIN ,NBYTE  ,NCM    ,NEDGE  ,NEL    ,
+     &         NEQ    ,NEQR   ,NGRID  ,NLINK  ,NN     ,NW     ,NZERO
 
       REAL     DUMG   ,DUMW   ,TA     ,TB
 
@@ -370,20 +367,13 @@ C
 ! E////////////////////////////////////////////////////////////////////E
 
       COMMON /S/ NN,MM,IH,IB,LINES,NEDGE,IADD,MINDEG,NAXIC
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /B/ IPARAM(20)
       COMMON /BITS/ NBITIN,KORE,IFL,NGRID,IPASS,NW,NBYTE,IBYTE,KDIM
       COMMON /D/ KORIG,KNEW,IOP,INP,NCM,NZERO,NEL,NEQ,NEQR,NLINK
       COMMON /W/ DUMW(6)
       COMMON /DOL/ ISTART(100),IGNORE(100)
       COMMON /DOLL/ IDIM,ISTA,IIG,IFIR,IGDEG
-      COMMON /ALPHA/ MA(26),NUM(10),MB(4)
-      COMMON /ELEM/ NTYPE,VYPE(160),TYPE(160),WYPE(160),ME(160),
-     -              NELEM(160),MDIM
-      INTEGER vype,TYPE,WYPE
       COMMON /GRA/ DUMG(3)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       integer KOM(MEM)
 
 ! B////////////////////////////////////////////////////////////////////B
@@ -605,17 +595,17 @@ C
 C     INPUT - INV
 C     OUTPUT - ILD,INT
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD
       INTEGER II3, INV(2,II3),INT(*),ILD(*)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
 
       INTEGER I      ,IER    ,IS     ,J      ,KFAC   ,KFM   ,
-     &        KMOD   ,L      ,MAXDEG ,MAXGRD ,MINI   ,NN
+     &        L      ,MINI   ,NN
               
       REAL     DUMS
 ! E////////////////////////////////////////////////////////////////////E
       COMMON /S/ NN,DUMS(8)
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
 C
 C     PERFORM A ROUGH SORT OF THE ORIGINAL GRID NUMBERS.
 C
@@ -656,22 +646,16 @@ C     J IS DEFINED ABOVE TO ALLOW EXECUTION ON UNIVAC IN OVER 65K.
 C
 C     READ EXECUTIVE AND CASE CONTROL DECKS.
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MA,NUM,MB,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER KA(80)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
 
-      INTEGER  I      ,IER    ,IPARAM ,KT     ,L      ,MA     ,MB     ,
-     &         NUM 
-
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
+      INTEGER  I      ,IER    ,IPARAM ,KT     ,L
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /ALPHA/ MA(26),NUM(10),MB(4)
       COMMON /B/ IPARAM(20)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       KT=0
       REWIND IOU8
       WRITE(IOU6,10)
@@ -723,20 +707,15 @@ C     PRINT SUMMARY OF CORE ALLOCATION.
 C
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
-
-      INTEGER  IBYTE  ,IFL    ,KDIM   ,KMOD   ,KORE   ,LL     ,MAXDEG ,
-     &         MAXGRD ,NBITIN ,NBYTE  ,NW
+      INTEGER  IBYTE  ,IFL    ,KDIM   ,KORE   ,LL     ,
+     &         NBITIN ,NBYTE  ,NW
      
       REAL     DUM 
 ! E////////////////////////////////////////////////////////////////////E
       COMMON /BITS/ NBITIN,KORE,IFL,DUM(2),NW,NBYTE,IBYTE,KDIM
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       LL=IFL-KORE
       WRITE(IOU6,10) KORE,MAXGRD,MAXDEG,KDIM
 10    FORMAT(/,'Working Storage:'/
@@ -806,16 +785,14 @@ C    J. MCKEE OF NSRDC - - -
 C        DEGREE,DIAM,IDIST,KOMPNT,MAXBND,MAXDGR,MINDEG,RELABL,CUTHILL
 C     CUTHILL WAS MODIFIED BY G. C. EVERSTINE, DTRC.
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER II1, KORDIM
       DIMENSION IG(II1,1),IC(*),IDEG(*),IDIS(*),IW(*)
       INTEGER NEW(*),ICC(*),ILD(*),IPP(*),NODESL(KORDIM),SUMW
       REAL IM1,IM2
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &        IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &        IOU19  ,IOU20
 
       INTEGER  I      ,IAJDIM ,IB     ,IC     ,IDEG   ,IDEM   ,IDEM1  ,
      &         IDIM   ,IDIS   ,IER    ,IG     ,IH     ,IH0    ,IHE    ,
@@ -824,11 +801,11 @@ C
 
       INTEGER  J      ,JMAX   ,JUMP
 
-      INTEGER  K      ,K2     ,KMOD   ,KNEW ,KORIG
+      INTEGER  K      ,K2     ,KNEW ,KORIG
 
       INTEGER  L
 
-      INTEGER  M      ,MA     ,MAD    ,MAXD   ,MAXDEG ,MAXGRD ,MAXLEV ,
+      INTEGER  M      ,MA    ,MAD    ,MAXD   ,MAXLEV ,
      &         MAXW   ,MAXW0  ,MAXW1  ,MEDIAN ,MI     ,MM     ,MODD
 
       INTEGER  NBITIN ,NC     ,NCM    ,NL     ,NN     ,NNODE  ,NOM    ,
@@ -840,15 +817,12 @@ C
 
 ! E////////////////////////////////////////////////////////////////////E
       COMMON /S/ NN,MM,IH,IB,DUMS(5)
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /BITS/ NBITIN,DUMBB(8)
       COMMON /D/ KORIG,KNEW,IH0,IHE,NCM,DUMD(5)
       COMMON /W/ MAXW0,RMS0,MAXW1,RMS1,BRMS0,BRMS1
       COMMON /B/ IPARAM(20)
       COMMON /DOL/ ISTART(100),DUMO(100)
       COMMON /DOLL/ IDIM,ISTA,DUML(3)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       CALL TIMER(TA,IWALL,0,IOU6)
 C     SET UP SCRATCH SPACE NODESL.
       IDEM=KORDIM/4
@@ -1075,17 +1049,16 @@ C     SET UP THE IDEG ARRAY CONTAINING THE DEGREE OF EACH NODE STORED
 C     IN THE IG ARRAY.
 C     IDEG(I) = DEGREE OF NODE I
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD
       INTEGER II1
       DIMENSION IG(II1,1),IDEG(*)
 ! B////////////////////////////////////////////////////////////////////B
-      INTEGER  I      ,IDEG   ,IG    ,J      ,KMOD   ,MAXDEG ,
-     &         MAXGRD ,MM     ,NN     ,NBITIN
+      INTEGER  I      ,IDEG   ,IG    ,J      ,MM     ,NN     ,NBITIN
 
       REAL     DUMBB  ,DUMS
  
 ! E////////////////////////////////////////////////////////////////////E
       COMMON /S/ NN,MM,DUMS(7)
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /BITS/ NBITIN,DUMBB(8)
       DO 100 I=1,NN
       IDEG(I)=0
@@ -1108,17 +1081,16 @@ C
 C     COMPUTE MAXIMUM DEGREE MM AND STORE IN IDEG.
 C
 ! B////////////////////////////////////////////////////////////////////B
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD
       INTEGER  I      ,IBW1   ,IDEG   ,IDIF   ,IDPTH  ,IOLD   ,IPF1   ,
-     &         IRW    ,ITST   ,J      ,KMOD
+     &         IRW    ,ITST   ,J
      
-      INTEGER  MAXDEG ,MAXGRD ,MM     ,N      ,NBITIN ,NDEG   ,NDSTK  ,
-     &         NN     ,NR
+      INTEGER  MM     ,N      ,NBITIN ,NDEG   ,NDSTK  ,NN     ,NR
 
       REAL     DUMBB  ,DUMS
 
 ! E////////////////////////////////////////////////////////////////////E
       COMMON /GRA/ N,IDPTH,IDEG
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /BITS/ NBITIN,DUMBB(8)
       COMMON /S/ NN,MM,DUMS(7)
       DIMENSION NDSTK(NR,1),NDEG(*),IOLD(*)
@@ -1154,18 +1126,18 @@ C     INCLUDE DIAGONAL TERMS IN BANDWIDTH AND PROFILE
 C
 C     DETERMINE NL STARTING POINTS AND STORE IN NODESL.
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD
       INTEGER II1
       DIMENSION IG(II1,*),IDIS(*),IW(*),ICC(*),IC(*),IDEG(*)
 ! B////////////////////////////////////////////////////////////////////B
       INTEGER  I      ,IC     ,ICC    ,IDEG   ,IDEM   ,IDIS   ,IG     ,
-     &         IW     ,KMOD   ,MAXDEG ,MAXDG  ,MAXGRD ,MAXLEV ,
+     &         IW     ,MAXDG  ,MAXLEV ,
      &         MD     ,ML     ,NBITIN ,NC     ,NL     ,NN
 
       REAL     DUMBB  ,DUMS
 
 ! E////////////////////////////////////////////////////////////////////E
       COMMON /S/ NN,DUMS(8)
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /BITS/ NBITIN,DUMBB(8)
       INTEGER NODESL(*)
       NL=0
@@ -1203,10 +1175,7 @@ C     IP      = PRINT OPTION PARAMETER (IF 0, NO PRINTED OUTPUT)
 C
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
+      USE BANDIT_BLOCK_DATA, ONLY : IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 
       INTEGER  I      ,IP     ,ISUM   ,K      ,MAXI   ,MEDIAN ,MM     ,
      &         MM1    ,MODD   ,NN     ,NN2
@@ -1215,8 +1184,6 @@ C
 
 ! E////////////////////////////////////////////////////////////////////E
       COMMON /S/ NN,MM,DUMS(7)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER IDEG(*),HIST(*)
 C
 C     COMPUTE HISTOGRAM.
@@ -1274,34 +1241,25 @@ C     INTERPRET DOLLAR SIGN CARD.
 C
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &        IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &        IOU19  ,IOU20
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD,
+     &                              MA,NUM,MB,
+     &                              NTYPE,VYPE,TYPE,WYPE,ME,NELEM,MDIM,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 
       INTEGER  I      ,IADD   ,IDIM   ,IER    ,IFIR   ,IFL    ,IFLD   ,
      &         IGDEG  ,IGNORE ,IIG    ,IPARAM ,ISTA   ,ISTART ,ITYPE  ,
-     &         J      ,JUMP   ,K      ,KDIM   ,KMOD   ,KORE   ,KT     ,
-     &         LINES                                                  ,
-     &         MA     ,MAXDEG ,MAXGRD ,MAXI   ,MB     ,MDIM   ,ME     ,
-     &         NBITIN ,NCON   ,NEDGE  ,NELEM  ,NGRID  ,NIP    ,NTYPE  ,
-     &         NUM
+     &         J      ,JUMP   ,K      ,KDIM   ,KORE   ,KT     ,
+     &         LINES  ,MAXI   ,NBITIN ,NCON   ,NEDGE  ,NGRID  ,NIP
 
       REAL     DMY    ,DUM    ,DUMS   ,DUMY
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /ALPHA/ MA(26),NUM(10),MB(4)
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /B/ IPARAM(20)
       COMMON /S/ DMY(4),LINES,NEDGE,IADD,DUMS,DUMY
       COMMON /BITS/ NBITIN,KORE,IFL,NGRID,DUM(4),KDIM
       COMMON /DOL/ ISTART(100),IGNORE(100)
       COMMON /DOLL/ IDIM,ISTA,IIG,IFIR,IGDEG
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
-      COMMON /ELEM/ NTYPE,VYPE(160),TYPE(160),WYPE(160),ME(160),
-     -              NELEM(160),MDIM
-      INTEGER vype,TYPE,WYPE,KA(80),IP(35)
+      INTEGER KA(80),IP(35)
       DATA MAXI/35/
 C
       GO TO (10,30,80), JUMP
@@ -1618,23 +1576,16 @@ C              (E.G., CELAS1 OR CPENTA), OTHERWISE, .FALSE. (OUTPUT)
 C
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
+      USE BANDIT_BLOCK_DATA, ONLY : MA,NUM,MB,
+     &                              NTYPE,VYPE,TYPE,WYPE,ME,NELEM,MDIM,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 
       INTEGER  I      ,IER    ,IFLD   ,IPARAM ,ITYPE  ,J      ,L      ,
-     &         LEN    ,LOOP   ,MA     ,MAXI   ,MB     ,MDIM   ,ME     ,
-     &         NCON   ,NELEM  ,NTYPE  ,NUM
+     &         LEN    ,LOOP   ,MAXI   ,NCON
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /ELEM/ NTYPE,VYPE(160),TYPE(160),WYPE(160),ME(160),
-     -              NELEM(160),MDIM
-      COMMON /ALPHA/ MA(26),NUM(10),MB(4)
       COMMON /B/ IPARAM(20)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
-      INTEGER vype,TYPE,WYPE,KA(70),EQGP
+      INTEGER KA(70),EQGP
       LOGICAL LESSOK
 ! B////////////////////////////////////////////////////////////////////B
 ! Add this so when READIT is called with NCON we will use NCON_array
@@ -1647,7 +1598,7 @@ C     SEE BLOCK DATA FOR A LISTING OF THE BANDIT ELEMENT LIBRARY.
 C     IT CAN BE LISTED AT EXECUTION TIME WITH  $ELEMENT YES  CARD.
 C
 ! B////////////////////////////////////////////////////////////////////B
-      DATA EQGP/'EQGP'/
+      DATA EQGP/4HEQGP/
 ! E////////////////////////////////////////////////////////////////////E
       LOOP=1
       LEN=1
@@ -1757,10 +1708,7 @@ c      6     all other reasons
 c
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
+      USE BANDIT_BLOCK_DATA, ONLY : IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 
       INTEGER  I      ,IER    ,IPARAM ,ITIME  ,KUMP   ,NN     ,KDIM   ,
      &         KA     ,NCARD
@@ -1771,8 +1719,6 @@ c
       COMMON /S/ NN,DUMS(8)
       COMMON /BITS/ DUM(8),KDIM
       COMMON /B/ IPARAM(20)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       COMMON /DOL/ KA(20),DUMO(180)
       GO TO (10,60,30,40,30,20), KUMP
 C
@@ -1933,15 +1879,12 @@ C  IDFLT-       FLAG USED IN PICKING FINAL LEVEL STRUCTURE, SET
 C               =1 IF WIDTH OF LVLS1 @ WIDTH OF LVLS2, OTHERWISE =2
 C  LVL,IWK-     WORKING STORAGE
 C
+      USE BANDIT_BLOCK_DATA, ONLY : IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER FLAG,NR,SND,SND1,SND2
       COMMON /GRA/ N,IDPTH,DUMG
       DIMENSION NDSTK(NR,*),NDEG(*),LVL(*),LVLS1(*),LVLS2(*),IWK(*)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
 
       INTEGER  I      ,IDFLT  ,IDIM   ,IDPTH  ,IER    ,IWK    ,LVL    ,
      &         LVLBOT ,LVLN   ,LVLS1  ,LVLS2  ,LVLWTH ,MAXLW  ,mtw1   ,
@@ -1950,8 +1893,6 @@ C
       REAL    DUMG   
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER NDLST(IDIM)
 C     DIMENSION OF NDLST IS THE MAX NUMBER OF NODES IN LAST LEVEL.
       mtw1=0
@@ -2024,13 +1965,10 @@ C     EL(2,I) = SMALLEST NODE NUMBER IN NEW SEQUENCE IN ELEMENT I
 C               (EL IS A SCRATCH ARRAY)
 C     MEM     = MEMORY AVAILABLE FOR EL ARRAY (INPUT)
 C
+      USE BANDIT_BLOCK_DATA, ONLY : IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER KG(*),ILD(*),EL(2,*),EID,EMOD
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
 
       INTEGER  I      ,IEL    ,IER    ,J      ,J1     ,K      ,KFLAG  ,
      &         KMIN   ,L      ,LOC    ,MEM    ,mflag  ,NBW    ,NCM    ,
@@ -2039,8 +1977,6 @@ C
 
 ! E////////////////////////////////////////////////////////////////////E
       COMMON /D/ OBW,NBW,OP,NP,NCM,NZERO,NEL,NEQ,NEQR,NLINK
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 C
       REWIND IOU13
 C
@@ -2226,14 +2162,11 @@ C
 ! this BANDIT_MODULE module. In the version of BANDIT_SUBRS that is not
 ! a module but a collection of subroutines in a file, then it must be
 ! defined here (or in an EXTERNAL command)
+      USE BANDIT_BLOCK_DATA, ONLY : IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER STNODE,RVNODE,RENUM,XC,STNUM,SBNUM
 ! E////////////////////////////////////////////////////////////////////E
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
 
       INTEGER  I      ,IBW1   ,IBW2   ,ICRIT  ,IDEG   ,IDFLT  ,IDIM   ,
      &         IDPTH  ,IER    ,IPARAM ,IPF1   ,IPF2   ,ISDIR  ,IWALL  ,
@@ -2256,8 +2189,6 @@ C          NOT JUST GIBSTK.
       COMMON /W/ MAXW0,RMS0,MAXW1,RMS1,BRMS0,BRMS1
       COMMON /B/ IPARAM(20)
       COMMON /S/ NN,MM,DUMS(7)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       COMMON /GRA/ N,IDPTH,IDEG
       INTEGER NHIGH(IDIM),NLOW(IDIM),NACUM(IDIM),SIZE(*),STPT(*)
 C     SIZE AND STPT HAVE DIMENSION IDIM/2 AND SHOULD BE CONTIGUOUS IN
@@ -2450,15 +2381,15 @@ C     PARTITION OPEN CORE AND COMPUTE PROBLEM SIZE LIMITS.
 C
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD
 
-      INTEGER  IBYTE  ,IER    ,IOU6   ,IPASS  ,KDIM   ,KMOD   ,KOR    ,
-     &         MAXDEG ,MAXGRD ,NBITIN ,NBYTE  ,NGRID  ,NW
+      INTEGER  IBYTE  ,IER    ,IOU6   ,IPASS  ,KDIM   ,KOR    ,
+     &         NBITIN ,NBYTE  ,NGRID  ,NW
 
       REAL     DUM
 
 ! E////////////////////////////////////////////////////////////////////E
       COMMON /BITS/ NBITIN,KOR,DUM,NGRID,IPASS,NW,NBYTE,IBYTE,KDIM
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
 C
       NW=1
 CPACK NW=2
@@ -2493,6 +2424,7 @@ C
 C     INPUT:  IG,IC,IDEG,ICC,NS,MAXLEV
 C     OUTPUT: IDIS,IW,ML
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD
       INTEGER II1
       DIMENSION IG(II1,*),IC(*),IDEG(*),IDIS(*),IW(*),ICC(*)
 ! B////////////////////////////////////////////////////////////////////B
@@ -2500,16 +2432,13 @@ C
 
       INTEGER  I      ,IA     ,IC     ,ICC    ,ICN    ,IDEG   ,IDIS   ,
      &         IDIST  ,IG     ,II     ,IW     ,
-     &         K      ,KI     ,KMOD   ,KO     ,
-     &         L      ,LL     ,
-     &         MAXDEG ,MAXGRD ,MAXLEV ,ML     ,
+     &         K      ,KI     ,KO     ,L      ,LL     ,MAXLEV ,ML     ,
      &         N      ,NBITIN ,NN     ,NNC    ,NS
 
       REAL     DUMBB  ,DUMS
 
 ! E////////////////////////////////////////////////////////////////////E
       COMMON /S/ NN,DUMS(8)
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /BITS/ NBITIN,DUMBB(8)
       ICN=IC(NS)
       NNC=ICC(ICN+1)-ICC(ICN)
@@ -2563,6 +2492,7 @@ C
 C     SET UP LIST OF POINTS TO IGNORE IN LIST ARRAY OF LENGTH N.
 C
 C UPON ENTRY, LIST ALREADY CONTAINS SET OF MPC DEPENDENT NODES, IF ANY.
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD
       INTEGER II1, II3
       DIMENSION IG(II1,*),INV(2,II3),LIST(*)
 ! B////////////////////////////////////////////////////////////////////B
@@ -2570,8 +2500,7 @@ C UPON ENTRY, LIST ALREADY CONTAINS SET OF MPC DEPENDENT NODES, IF ANY.
 
       INTEGER  I      ,IDIM   ,IER    ,IFIR   ,IG     ,IGDEG  ,IGNORE ,
      &         IIG    ,INV    ,ISTA   ,ISTART ,
-     &         J      ,KMOD   ,LIST   ,
-     &         MAXDEG ,MAXGRD ,MM     ,N      ,NBITIN ,NN
+     &         J      ,LIST   ,MM     ,N      ,NBITIN ,NN
 
       REAL     DUMBB  ,DUMS
 
@@ -2579,7 +2508,6 @@ C UPON ENTRY, LIST ALREADY CONTAINS SET OF MPC DEPENDENT NODES, IF ANY.
       COMMON /DOL/ ISTART(100),IGNORE(100)
       COMMON /DOLL/ IDIM,ISTA,IIG,IFIR,IGDEG
       COMMON /S/ NN,MM,DUMS(7)
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /BITS/ NBITIN,DUMBB(8)
 C
 C     ADD IGNORE POINTS TO LIST.
@@ -2625,21 +2553,16 @@ C
 ! Add this so when READIT is called with NCARD we will use NCARD_array
 ! instead. Needed so Lahey doesn't complain about shape of NCARD being
 ! different than IP (array) in subr READIT
+      USE BANDIT_BLOCK_DATA, ONLY : IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER NCARD_array(1)
 ! E////////////////////////////////////////////////////////////////////E
       INTEGER KA(20)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
 
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
-
       INTEGER  I      ,II     ,IN     ,KT     ,L      ,NCARD
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       DATA IN/0/
       IF(IN.EQ.1) RETURN
       IN=1
@@ -2671,18 +2594,12 @@ C     BY BANDIT TO ORIGINAL GRID POINT IGRID.
 C
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
-
-      INTEGER  IER    ,IGRID  ,II3    ,INTERN ,KMOD   ,LOC    ,MAXDEG ,
-     &         MAXGRD
+      INTEGER  IER    ,IGRID  ,II3    ,INTERN ,LOC
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER INV(2,II3)
       intern=0
       IF(IGRID.LE.0) GO TO 20
@@ -2711,6 +2628,7 @@ C     IC(I)=COMPONENT INDEX FOR NODE I
 C     ICC(I)=THE STARTING POSITION TO BE USED FOR LABELS IN COMPONENT I
 C     THUS, ICC(I+1)-ICC(I)= THE NUMBER OF NODES IN COMPONENT I
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD
       INTEGER II1
       DIMENSION IG(II1,*),IC(*),IDEG(*),IW(*),ICC(*)
 ! B////////////////////////////////////////////////////////////////////B
@@ -2718,15 +2636,13 @@ C
 
       INTEGER  I      ,IA     ,IC     ,ICC    ,IDEG   ,IG     ,II     ,
      &         IS     ,IW     ,
-     &         KI     ,KMOD   ,KO     ,KOMPNT ,
-     &         MAXDEG ,MAXGRD ,MM     ,
+     &         KI     ,KO     ,KOMPNT ,MM     ,
      &         N      ,NBITIN ,NC     ,NN
 
       REAL     DUMBB  ,DUMS
 
 ! E////////////////////////////////////////////////////////////////////E
       COMMON /S/ NN,MM,DUMS(7)
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /BITS/ NBITIN,DUMBB(8)
       kompnt=0
       DO I=1,NN
@@ -2772,17 +2688,12 @@ C     CARD IN FORMAT OF A1,A4,A3,64A1,A1,A4,A3.
 C
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
+      USE BANDIT_BLOCK_DATA, ONLY : MA,NUM,MB,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
-
-      INTEGER  I      ,ITYPE  ,MA     ,MB     ,NUM
+      INTEGER  I      ,ITYPE
       
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /ALPHA/ MA(26),NUM(10),MB(4)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER KA(70)
       ITYPE=0
 C
@@ -2876,7 +2787,7 @@ C
 ! E////////////////////////////////////////////////////////////////////E
       INTEGER KA(N),BLANK
 ! B////////////////////////////////////////////////////////////////////B
-      DATA BLANK/' '/
+      DATA BLANK/1H /
 ! E////////////////////////////////////////////////////////////////////E
       DO 10 I=N,1,-1
       IF(KA(I).NE.BLANK) GO TO 20
@@ -2953,28 +2864,23 @@ C     NEDGE = NUMBER OF UNIQUE EDGES.
 C
 C     REVISED 12/4/91 (TO AVOID CRAY COMPILER BUG)
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER II1
       DIMENSION IG(II1,*),LIST(*)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
 
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
-
       INTEGER  I      ,IER    ,IG     ,IJ     ,
-     &         J      ,K      ,KMOD   ,L      ,LIST   ,
-     &         MAXDEG ,MAXGRD ,MM     ,MM1    ,
-     &         N      ,NBITIN ,NEDGE  ,NL     ,NN
+     &         J      ,K      ,L      ,LIST   ,
+     &         MM     ,MM1    ,N      ,NBITIN ,
+     &         NEDGE  ,NL     ,NN
 
       REAL     DUM    ,DUMBB  ,DUMS
 
 ! E////////////////////////////////////////////////////////////////////E
       COMMON /S/ NN,MM,DUM(3),NEDGE,DUMS(3)
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /BITS/ NBITIN,DUMBB(8)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 C
       IF(NL.LE.0) RETURN
       MM1=MM-1
@@ -3016,24 +2922,17 @@ C     MAXI=MAXIMUM NUMBER OF GRID POINTS ALLOWED PER ELEMENT.
 C     MODIFIED 4/16/93 TO ADD MPCAX CARDS (SHORT FIELD ONLY).
 C     ASSUMES FIELD 6 OF FIRST LOGICAL MPCAX CARD IS NOT BLANK.
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MA,NUM,MB,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER MAXI
       INTEGER KA(70),KG(MAXI),INV(*),NORIG(*),ENDP(2)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
-
       INTEGER  I      ,IDUM   ,IER    ,II3    ,IPARAM ,ITYPE  , 
-     &         J      ,K      ,L      ,
-     &         MA     ,MB     ,NIP    ,NOUT   ,NUM
+     &         J      ,K      ,L      ,NIP    ,NOUT
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /ALPHA/ MA(26),NUM(10),MB(4)
       COMMON /B/ IPARAM(20)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       NOUT=IOU12
 C
 C     L=1 OR 2 FOR SHORT OR LONG FIELDS, RESPECTIVELY
@@ -3131,14 +3030,12 @@ C
 C     READ BULK DATA, SET UP CONNECTION TABLE, RESEQUENCE NODES,
 C     AND GENERATE SEQGP CARDS.
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       DIMENSION IG(*),INV(*),INT(*),ICC(*),ILD(*),NORIG(*),IP(*)
       INTEGER KORDIM ,KOR(KORDIM)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
 
       INTEGER  I      ,IADD   ,IBW2   ,IBYTE  ,ICC    ,ICRIT  ,IDIM   ,
      &         IER    ,IFIR   ,IG     ,IGDEG  ,IGNORE ,II1    ,II3    ,
@@ -3146,8 +3043,7 @@ C
      &         IPF2   ,IPR    ,ISTA   ,ISTART ,IWALL  ,
      &         J      ,JUMP   ,
      &         K      ,K1     ,K2     ,K3     ,K4     ,K5     ,KDIM   ,
-     &         KMOD   ,KORE   ,L      ,
-     &         MAXDEG ,MAXGRD ,MEM    ,MINDEG ,MM     ,
+     &         KORE   ,L      ,MEM    ,MINDEG ,MM     ,
      &         N      ,NBW    ,NBYTE  ,NCM    ,NEDGE  ,NEL    ,NEQ    ,
      &         NEQR   ,NLINK  ,NN     ,NORIG  ,NP     ,NW     ,NZERO  ,
      &         OBW    ,OP
@@ -3158,12 +3054,9 @@ C
       COMMON /BITS/ DUM,KORE,DUMM(2),IPASS,NW,NBYTE,IBYTE,KDIM
       COMMON /B/ IPARAM(20)
       COMMON /S/ NN,MM,DUMS(3),NEDGE,IADD,MINDEG,DUMY
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /DOL/ ISTART(100),IGNORE(100)
       COMMON /DOLL/ IDIM,ISTA,IIG,IFIR,IGDEG
       COMMON /D/ OBW,NBW,OP,NP,NCM,NZERO,NEL,NEQ,NEQR,NLINK
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 C
       CALL TIMER(TA,IWALL,0,IOU6)
 C
@@ -3367,14 +3260,14 @@ C
 C     THIS FUNCTION RETURNS 1 AS ITS VALUE IF A CARD READ BY 80A1 IS
 C     THE BEGIN BULK CARD. IF NOT, 0 IS RETURNED.
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MA,NUM,MB
       INTEGER KA(*)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
 
-      INTEGER  I      ,K      ,MA     ,MB     ,NBULK  ,NUM
+      INTEGER  I      ,K      ,NBULK
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /ALPHA/ MA(26),NUM(10),MB(4)
       NBULK=0
 C
 C     LOOK FOR FIRST NON-BLANK.
@@ -3412,20 +3305,15 @@ C
 C     THIS FUNCTION RETURNS 1 AS ITS VALUE IF A CARD READ BY 70A1 IS
 C     THE ENDDATA CARD.  OTHERWISE, 0 IS RETURNED.
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MA,NUM,MB,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER KA(*)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
 
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
-
-      INTEGER  I      ,MA     ,MB     ,NDATA  ,NUM
+      INTEGER  I      ,NDATA
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /ALPHA/ MA(26),NUM(10),MB(4)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       NDATA=0
 C
 C     LOOK FOR FIRST NON-BLANK.
@@ -3456,16 +3344,10 @@ C     REDEFINE IOU5 TO BE IOU11.
 C
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
-
+      USE BANDIT_BLOCK_DATA, ONLY : IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER  IER    ,L
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER KA(80)
 C     KA IS SCRATCH SPACE.
       L=IOU11
@@ -3488,21 +3370,16 @@ C
 C
 C     WRITE BULK DATA DECK IF RESEQUENCING NOT REQUESTED.
 C
+      USE BANDIT_BLOCK_DATA, ONLY : IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER KA(80)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
 
       INTEGER  IPARAM
 
 ! E////////////////////////////////////////////////////////////////////E
 C     KA IS SCRATCH SPACE.
       COMMON /B/ IPARAM(20)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       WRITE(IOU6,10)
    10 FORMAT(/,'Grid point resequencing not requested.' )
    20 READ(IOU5,30,END=40) KA
@@ -3520,14 +3397,14 @@ C     CONTAINS THE CHARACTER STRING "THRU".  IF NOT, 0 IS RETURNED.
 C
 C     N=NUMBER OF CARD COLUMNS TO SEARCH STARTING AT KA(1)
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MA,NUM,MB
       INTEGER KA(*)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
 
-      INTEGER  I      ,MA     ,MB     ,N      ,NA     ,NTHRU  ,NUM
+      INTEGER  I      ,N      ,NA     ,NTHRU
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /ALPHA/ MA(26),NUM(10),MB(4)
       NTHRU=0
 C
 C     LOOK FOR FIRST NON-BLANK.
@@ -3571,10 +3448,10 @@ C      IBW2 AND IPF2 HERE DO NOT INCLUDE DIAGONAL TERMS.
 C  IPFA-        WORKING STORAGE USED TO COMPUTE PROFILE AND BANDWIDTH
 C  ISDIR-       INDICATES STEP DIRECTION USED IN NUMBERING(+1 OR -1)
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD
       INTEGER IDIM, SND,XA,XB,XC,XD,CX,END,RENUM,TEST
       COMMON /GRA/ N,IDPTH,IDEG
       INTEGER STKA(IDIM),STKB(IDIM),STKC(IDIM),STKD(IDIM)
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /BITS/ NBITIN,DUMBB(8)
       INTEGER NR, IPFA(*)
       DIMENSION NDSTK(NR,*),LVLS2(*),NDEG(*),RENUM(*),LVLST(*),LSTPT(*)
@@ -3584,9 +3461,8 @@ C
       INTEGER  I      ,IBW2   ,IDEG   ,IDPTH  ,IER    ,INX    ,
      &         IPF2   ,IPRO   ,ISDIR  ,
      &         J      ,
-     &         KMOD   ,
      &         LND    ,LST    ,LSTPT  ,LVLN   ,LVLS2  ,LVLST  ,
-     &         MAXDEG ,MAXGRD ,MAXI   ,
+     &         MAXI   ,
      &         N      ,NBITIN ,NBW    ,NDEG   ,NDSTK  ,NFLG   ,
      &         NSTPT  ,NUM
 
@@ -3808,28 +3684,22 @@ C     HEADER CARD GIVES NUMBER OF NODES (NN) AND MAX NODAL DEGREE (M)
 C     IN 2I5, THEN ONE CARD PER NODE, 24I5.
 C     FIELD 1 IS NODE, OTHER FIELDS ARE CONNECTIONS.
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER II1
       DIMENSION IG(II1,*),IP(*),ILD(*)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
 
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
-
       INTEGER  I      ,IG     ,ILD    ,IP     ,
-     &         J      ,K      ,KMOD   ,
-     &         M      ,MAXDEG ,MAXGRD ,
+     &         J      ,K      ,M      ,
      &         NBITIN ,NN
 
       REAL     DUMBB  ,DUMS
 
 ! E////////////////////////////////////////////////////////////////////E
       COMMON /S/ NN,M,DUMS(7)
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /BITS/ NBITIN,DUMBB(8)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 C
       WRITE(IOU16,30) NN,M
       DO 20 I=1,NN
@@ -3878,18 +3748,18 @@ C     WHICH IS COMMENTED OUT.
 C
 C     G.C. EVERSTINE, DTRC 128, SEPT. 1973 (REVISED JULY 1978)
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MA,NUM,MB
       INTEGER KA(*),IP(*),FLAG,BLANK
-      COMMON /ALPHA/ MA(26),NUM(10),MB(4)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
 
       INTEGER  I      ,J      ,KOL    ,
-     &         MA     ,MAXI   ,MB     ,N      ,NIP    ,NUM
+     &         MAXI   ,N      ,NIP
 
 ! E////////////////////////////////////////////////////////////////////E
 C     DATA NUM/1H0,1H1,1H2,1H3,1H4,1H5,1H6,1H7,1H8,1H9/
 ! B////////////////////////////////////////////////////////////////////B
-      DATA BLANK/' '/
+      DATA BLANK/1H /
 ! E////////////////////////////////////////////////////////////////////E
       NIP=0
       KOL=0
@@ -3923,35 +3793,28 @@ C
 ! Add this so when READIT is called with EID we will use EID_array
 ! instead. Needed so Lahey doesn't complain about shape of EID being
 ! different than IP (array) in subr READIT
+      USE BANDIT_BLOCK_DATA, ONLY : MA,NUM,MB,
+     &                              NTYPE,VYPE,TYPE,WYPE,ME,NELEM,MDIM,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER EID_array(1)
 ! E////////////////////////////////////////////////////////////////////E
       INTEGER II1, II3, MAXI
       DIMENSION IG(II1,*),INV(2,II3),NORIG(*)
-      INTEGER vype,TYPE,WYPE,KA(70),KG(MAXI),IDUM(*),ENDP(2),EID
+      INTEGER KA(70),KG(MAXI),IDUM(*),ENDP(2),EID
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
 
       INTEGER  I      ,I1     ,I2     ,IER    ,IFLD   ,IG     ,II     ,
      &         INV    ,IPARAM ,ISAVE  ,ITYPE  ,
      &         J      ,K      ,L      ,LEN    ,LOOP   ,
-     &         MA     ,MB     ,MDIM   ,ME     ,
-     &         NCARD  ,NCON   ,NEL    ,NELEM  ,NEQ    ,NEQR   ,NLINK  ,
-     &         NORIG  ,npt    ,NTYPE  ,NUM
+     &         NCARD  ,NCON   ,NEL    ,NEQ    ,NEQR   ,NLINK  ,
+     &         NORIG  ,npt
 
       REAL     DUMD   
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /ALPHA/ MA(26),NUM(10),MB(4)
-      COMMON /ELEM/ NTYPE,VYPE(160),TYPE(160),WYPE(160),ME(160),
-     -              NELEM(160),MDIM
       COMMON /B/ IPARAM(20)
       COMMON /D/ DUMD(6),NEL,NEQ,NEQR,NLINK
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 C     MAXI=MAXIMUM NUMBER OF GRID POINTS ALLOWED PER ELEMENT
 c          (=kdim4 from main) (input)
       LOGICAL LESSOK,rigide
@@ -4163,11 +4026,11 @@ C     SET UP ILD AND NEW.
 C     ILD(OLD)=NEW
 C     NEW(NEW)=OLD,   THE INVERSE OF ILD
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD
       DIMENSION IG(II1,*),IC(*),IDEG(*),IDIS(*),IW(*),NEW(*),ICC(*)
       INTEGER ILD(*)
       COMMON /S/ NN,DUMS(8)
       INTEGER X
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /BITS/ NBITIN,DUMBB(8)
       INTEGER IDIM,NODES(*),IAJ(IDIM)
 ! B////////////////////////////////////////////////////////////////////B
@@ -4177,9 +4040,7 @@ C
      &         IDIS   ,IER    ,IG     ,II     ,II1    ,IJ     ,IW     ,
      &         IZ     ,
      &         J      ,JJ     ,JT     ,
-     &         KI     ,KMOD   ,KO     ,
-     &         L      ,LL     ,
-     &         MAXDEG ,MAXGRD ,
+     &         KI     ,KO     ,L      ,LL     ,
      &         N      ,NBITIN ,NEW    ,NN     ,NNC    ,NS     ,NT
 
       REAL     DUMBB  ,DUMS
@@ -4281,13 +4142,10 @@ C     THIS ROUTINE MAKES A COPY OF THE ORIGINAL GRID POINT SEQUENCE IF
 C     BOTH METHODS ARE TO BE USED.  ALSO, IF CUTHILL ACHIEVES NO BW
 C     REDUCTION, THIS SEQUENCE IS RETRIEVED BEFORE CALLING GIBSTK.
 C
+      USE BANDIT_BLOCK_DATA, ONLY : IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER ILD(*),INT(*)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
 
       INTEGER  I      ,IGOTO  ,IPARAM ,JUMP   ,L      ,NN
 
@@ -4296,8 +4154,6 @@ C
 ! E////////////////////////////////////////////////////////////////////E
       COMMON /S/ NN,DUMS(8)
       COMMON /B/ IPARAM(20)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       L=IOU12
       GO TO (10,20), IGOTO
 C
@@ -4378,6 +4234,9 @@ C
 ! Add this so when READIT is called with IG we will use IG_array
 ! instead. Needed so Lahey doesn't complain about shape of IG being
 ! different than IP (array) in subr READIT
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD,
+     &                              MA,NUM,MB,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER IG_array(1)
 ! E////////////////////////////////////////////////////////////////////E
 
@@ -4393,27 +4252,17 @@ C
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
 
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
-
       INTEGER  I      ,IBEG   ,IDUM   ,IEND   ,IER    ,IG     ,II3    ,
      &         IPARAM ,IT     ,ITYPE  ,
-     &         K      ,KMOD   ,
-     &         L      ,LOCDGP ,LOCIGP ,
-     &         MA     ,MAXDEG ,MAXGRD ,MB     ,
+     &         K      ,L      ,LOCDGP ,LOCIGP ,
      &         N      ,NDGP   ,NEQ    ,NEQR   ,NF     ,NFSDGP ,NLINK  ,
-     &         npoint ,NUM
+     &         npoint
 
       REAL     DUMD
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /ALPHA/ MA(26),NUM(10),MB(4)
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /B/ IPARAM(20)
       COMMON /D/ DUMD(7),NEQ,NEQR,NLINK
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 C
 C     DETERMINE RIGID ELEMENT TYPE.
 C
@@ -4711,24 +4560,18 @@ C     INV(1,I) CONTAINS AN ORIGINAL GRID POINT NUMBER
 C     INV(2,I) CONTAINS THE INTERNAL NUMBER ASSIGNED TO IT (BEFORE
 C              SORTING)
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER II3,INV(2,II3),NORIG(*),KG(*)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
 
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
-
-      INTEGER  I      ,IER    ,KMOD   ,LOC    ,
-     &         MAXDEG ,MAXGRD ,NCON   ,NN     ,NOLD
+      INTEGER  I      ,IER    ,LOC    ,NCON   ,NN     ,NOLD
 
       REAL     DUMS
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /S/ NN,DUMS(8)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       IF(NCON.LT.1) RETURN
       DO 50 I=1,NCON
       NOLD=KG(I)
@@ -4769,13 +4612,10 @@ C                LABEL I
 C     JUMP     = 1 IF NO SEQGP CARDS ARE TO BE GENERATED (E.G., IF NO
 C                IMPROVEMENT IN BW HAS RESULTED).
 C
+      USE BANDIT_BLOCK_DATA, ONLY : IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER NORIG(*),ILD(*),NEW(*)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
 
       INTEGER  I      ,IADD   ,ILOOP  ,IPARAM ,ITIME  ,
      &         J      ,JUMP   ,
@@ -4789,8 +4629,6 @@ C
       COMMON /B/ IPARAM(20)
       COMMON /D/ OBW,NBW,OP,NP,DUMD(6)
       COMMON /W/ DUM(2),MAXW,RMS,DUMW(2)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER OBW,OP
       REWIND IOU7
 ! B////////////////////////////////////////////////////////////////////B
@@ -4890,29 +4728,24 @@ C     THIS ROUTINE SETS IG(KG1,-)=KG2 AND IG(KG2,-)=KG1 IF THIS
 C        CONNECTION HAS NOT ALREADY BEEN SET.
 C
 C     NEDGE = NUMBER OF UNIQUE EDGES.
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER II1
       DIMENSION IG(II1,*),NORIG(*)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
 
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
-
       INTEGER  IER    ,IG     ,IS     ,
-     &         K      ,KG1    ,KG2    ,KMOD   ,
+     &         K      ,KG1    ,KG2    ,
      &         L      ,LOOP   ,
-     &         M      ,MAXDEG ,MAXGRD ,MM     ,
+     &         M      ,MM     ,
      &         NBITIN ,NEDGE  ,NN     ,NORIG
 
       REAL     DUM    ,DUMBB  ,DUMS
 
 ! E////////////////////////////////////////////////////////////////////E
       COMMON /S/ NN,MM,DUM(3),NEDGE,DUMS(3)
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /BITS/ NBITIN,DUMBB(8)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 C
       IF(KG1.EQ.0 .OR. KG2.EQ.0 .OR. KG1.EQ.KG2) RETURN
       L=KG1
@@ -4963,24 +4796,18 @@ C     LESSOK = .TRUE. IF THE CONNECTION CARD NEED NOT HAVE ALL GRID
 C              POINTS PRESENT (E.G., CELAS1 OR CPENTA), OTHERWISE FALSE
 C              (INPUT)
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MA,NUM,MB,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER KA(70),KG(*),ENDP(2)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
 
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
-
       INTEGER  I      ,      IER    ,IFLD   ,IPARAM ,ITYPE  ,
-     &         J      ,K      ,L      ,LEN    ,LEN8   ,
-     &         M      ,M1     ,MA     ,MB     ,
-     &         N      ,NCON   ,NIP    ,NPT    ,NUM
+     &         J      ,K      ,L    ,LEN    ,LEN8   ,
+     &         M      ,M1     ,N    ,NCON   ,NIP    ,NPT
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /ALPHA/ MA(26),NUM(10),MB(4)
       COMMON /B/ IPARAM(20)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       LOGICAL LESSOK
 C
       DO I=1,NCON
@@ -5174,18 +5001,13 @@ C     IP = TEMPORARY STORAGE.
 C
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
+      USE BANDIT_BLOCK_DATA, ONLY : IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 
       INTEGER  I      ,II     ,J      ,MM     ,NN
 
       REAL     STIFF
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER IP(*),EID,PID
       PID=101
       STIFF=2.71828
@@ -5245,24 +5067,17 @@ C     PRINT CONNECTION TABLE IN TERMS OF SORTED INTERNAL LABELS.
 C
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 
       INTEGER  I      ,IC     ,IDEG   ,IG     ,II1    ,ILD    ,IP     ,
-     &         J      ,K      ,KMOD   ,
-     &         MAXDEG ,MAXGRD ,MDIFF  ,MM     ,
-     &         NBITIN ,NN
+     &         J      ,K      ,MDIFF  ,MM     ,NBITIN ,NN
 
       REAL     DUM    ,DUMBB
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /S/ NN,MM,DUM(7)
       COMMON /BITS/ NBITIN,DUMBB(8)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       DIMENSION IG(II1,*),IC(*),IDEG(*),ILD(*),IP(*)
       IF((NN*MM).EQ.0) RETURN
       WRITE(IOU6,10)
@@ -5336,10 +5151,7 @@ C     PRINT BANDIT SUMMARY.
 C
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
-
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
+      USE BANDIT_BLOCK_DATA, ONLY : IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 
       INTEGER  IADD   ,IPARAM ,
      &         MAXW0  ,MAXW1  ,MINDEG ,MM     ,
@@ -5360,8 +5172,6 @@ C
       COMMON /B/ IPARAM(20)
       COMMON /D/ OBW,NBW,OP,NP,NCM,NZERO,NEL,NEQ,NEQR,NLINK
       COMMON /W/ MAXW0,RMS0,MAXW1,RMS1,BRMS0,BRMS1
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER OBW,OP
 ! B////////////////////////////////////////////////////////////////////B
       NEW_BW = NBW         ! New bandwidth printed out in this subr
@@ -5432,22 +5242,17 @@ C     PRINT CONNECTION TABLE IN TERMS OF ORIGINAL GRID NUMBERS.
 C
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
-
-      INTEGER  I      ,IG     ,II1    ,IP     ,J      ,K      ,KMOD   ,
-     &         MAXDEG ,MAXGRD ,MM     ,NBITIN ,NN     ,NORIG
+      INTEGER  I      ,IG     ,II1    ,IP     ,J      ,K      ,
+     &         MM     ,NBITIN ,NN     ,NORIG
 
       REAL     DUM    ,DUMBB 
 
 ! E////////////////////////////////////////////////////////////////////E
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /S/ NN,MM,DUM(7)
       COMMON /BITS/ NBITIN,DUMBB(8)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       DIMENSION IG(II1,*),IP(*),NORIG(*)
       IF((NN*MM).EQ.0) RETURN
       WRITE(IOU6,10)
@@ -5482,7 +5287,7 @@ C
 ! E////////////////////////////////////////////////////////////////////E
       INTEGER KA(*),A,XIC,BLANK,MINUS
 ! B////////////////////////////////////////////////////////////////////B
-      DATA A,XIC,BLANK,MINUS/'A','XIC',' ','-'/
+      DATA A,XIC,BLANK,MINUS/1HA,3HXIC,1H ,1H-/
 ! E////////////////////////////////////////////////////////////////////E
       COMMON /S/ DUM(8),NAXIC
 ! B////////////////////////////////////////////////////////////////////B
@@ -5527,30 +5332,24 @@ C     THE PRESENCE OF MPC*S AND STORES THE DEPENDENT POINTS IN LIST.
 C
 C     NEQ = NUMBER OF MPC EQUATIONS.
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD,
+     &                              IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
       INTEGER II1, MAXI
       DIMENSION IG(II1,*),LIST(*),NORIG(*)
       INTEGER KG(MAXI)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
 
-      INTEGER  IOU5   ,IOU6   ,IOU7   ,IOU8   ,IOU9   ,IOU10  ,IOU11  ,
-     &         IOU12  ,IOU13  ,IOU14  ,IOU15  ,IOU16  ,IOU17  ,IOU18  ,
-     &         IOU19  ,IOU20
-
       INTEGER  I      ,IER    ,IG     ,IGRID  ,II     ,IOPT   ,
-     &         J      ,KMOD   ,L      ,LIST   ,
-     &         MAXDEG ,MAXGRD ,MM     ,
+     &         J      ,L      ,LIST   ,MM     ,
      &         NBITIN ,NEQ    ,NN     ,NORIG  ,NTERM
 
       REAL     DUM    ,DUMBB  ,DUMD   ,DUMS
 
 ! E////////////////////////////////////////////////////////////////////E
       COMMON /S/ NN,MM,DUMS(7)
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /D/ DUM(7),NEQ,DUMD(2)
       COMMON /BITS/ NBITIN,DUMBB(8)
-      COMMON /IOUNIT/ IOU5,IOU6,IOU7,IOU8,IOU9,IOU10,IOU11,IOU12,IOU13,
-     -                IOU14,IOU15,IOU16,IOU17,IOU18,IOU19,IOU20
 C     IOPT=1 IF DEPENDENT POINTS ARE TO BE ACCUMULATED IN A LIST FOR
 C            LATER REMOVAL FROM THE CONNECTION TABLE IG (OTHERWISE 0)
       DATA IOPT/0/
@@ -5653,17 +5452,15 @@ C               ON OUTPUT THE TOTAL NUMBER OF LEVELS + 1
 C  IBORT-       INPUT PARAM WHICH TRIGGERS EARLY RETURN IF
 C               MAXLW BECOMES .GE. IBORT
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD
       INTEGER NR
       DIMENSION NDSTK(NR,*),LVL(*),IWK(*),NDEG(*)
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /BITS/ NBITIN,DUMBB(8)
 ! B////////////////////////////////////////////////////////////////////B
 ! Add the following so we can use IMPLICIT NONE
 
       INTEGER  IBORT  ,INOW   ,IROOT  ,ITEST  ,ITOP   ,IWK    ,IWKNOW ,
-     &         J      ,KMOD   ,
-     &         LVL    ,LVLBOT ,LVLN   ,LVLTOP ,LVLWTH ,
-     &         MAXDEG ,MAXGRD ,MAXLW  ,
+     &         J      ,LVL    ,LVLBOT ,LVLN   ,LVLTOP ,LVLWTH ,MAXLW  ,
      &         NBITIN ,NDEG   ,NDROW  ,NDSTK
 
       REAL     DUMBB 
@@ -5736,8 +5533,8 @@ C     NBITIN  = NUMBER OF BITS PER INTEGER(CDC)
 C     INPUT   - IG,II1,ILD,NN,MM,MAXGRD,NBITIN,NC,IC
 C     OUTPUT  - NEW,KACT,MAXW,AVERW,SUMW,RMS,MAXB,BRMS,MINDEG
 C
+      USE BANDIT_BLOCK_DATA, ONLY : MAXGRD,MAXDEG,KMOD
       COMMON /S/ NN,MM,DUMS(5),MINDEG,DUMY
-      COMMON /A/ MAXGRD,MAXDEG,KMOD
       COMMON /BITS/ NBITIN,DUMBB(8)
       INTEGER II1
       DIMENSION IG(II1,*),ILD(*),NEW(*),KACT(*)
@@ -5747,8 +5544,8 @@ C
 ! Add the following so we can use IMPLICIT NONE
 
       INTEGER  I      ,IB     ,IB1    ,IG     ,ILD    ,IWAVE  ,
-     &         J      ,K      ,KACT   ,KMOD   ,KT     ,L      ,
-     &         M      ,MAXB   ,MAXDEG ,MAXGRD ,MAXW   ,MINDEG ,MM     ,
+     &         J      ,K      ,KACT   ,KT     ,L      ,
+     &         M      ,MAXB   ,MAXW   ,MINDEG ,MM     ,
      &         NBITIN ,NC     ,NEW    ,NN
 
       REAL     ANN    ,AVERW  ,BRMS   ,DUMBB  ,DUMS   ,DUMY   ,

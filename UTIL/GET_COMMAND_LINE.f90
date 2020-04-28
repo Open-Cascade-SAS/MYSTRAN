@@ -43,8 +43,6 @@
  
       INTEGER(LONG), PARAMETER        :: SUBR_BEGEND = GET_COMMAND_LINE_BEGEND
 
-      INTRINSIC                       :: GETCL
-
 ! *********************************************************************************************************************************
       IF (WRT_LOG >= SUBR_BEGEND) THEN
          CALL OURTIM
@@ -56,7 +54,7 @@
 ! Get command line string which should contain the file name of the input data deck. This strips out all leading blanks, before
 ! filename, on the command line. 
  
-      CALL GETCL ( FILNAM )
+      CALL GET_COMMAND_ARGUMENT ( 1, FILNAM )
  
 ! **********************************************************************************************************************************
       IF (WRT_LOG >= SUBR_BEGEND) THEN

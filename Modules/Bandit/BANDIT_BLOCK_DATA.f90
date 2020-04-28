@@ -24,7 +24,7 @@
                                                                                                         
 ! End MIT license text.                                                                                      
 
-      BLOCK DATA BANDIT_BLOCK_DATA
+      MODULE BANDIT_BLOCK_DATA
 
 ! **********************************************************************************************************************************
       COMMON /ALPHA/ MA(26),NUM(10),MB(4)
@@ -32,7 +32,7 @@
       INTEGER  MA ,NUM ,MB
 
 !              1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26
-      DATA MA/'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'/
+      DATA MA/1HA,1HB,1HC,1HD,1HE,1HF,1HG,1HH,1HI,1HJ,1HK,1HL,1HM,1HN,1HO,1HP,1HQ,1HR,1HS,1HT,1HU,1HV,1HW,1HX,1HY,1HZ/
 
 !     Alphabet key for MA array - - -
 
@@ -50,9 +50,9 @@
 !        L - 12         Y - 25
 !        M - 13         Z - 26
 
-      DATA NUM/'0','1','2','3','4','5','6','7','8','9'/
+      DATA NUM/1H0,1H1,1H2,1H3,1H4,1H5,1H6,1H7,1H8,1H9/
 
-      DATA MB/'$',' ','+','*'/
+      DATA MB/1H$,1H ,1H+,1H*/
 
 ! **********************************************************************************************************************************
 ! I/O files
@@ -129,43 +129,43 @@
 !        ' '    , ' '    , ' '    , ' '    , ' '    , ' '    , ' '    , ' '    , ' '    , ' '       /                    ! 151 - 160
 
       DATA TYPE                                                                                     &
-      /  'NDDA' , 'PC  ' , 'PC* ' , 'ELAS' , 'ELAS' , 'DAMP' , 'DAMP' , 'MASS' , 'MASS' , 'ROD ' ,  &                    !   1 -  10
-         'TUBE' , 'VISC' , 'DAMP' , 'DAMP' , 'ELAS' , 'ELAS' , 'MASS' , 'MASS' , 'AXIF' , 'AXIF' ,  &                    !  11 -  20
-         'AXIF' , 'BAR ' , 'CONE' , 'FLUI' , 'FLUI' , 'FLUI' , 'HBDY' , 'HEXA' , 'HEXA' , 'HTTR' ,  &                    !  21 -  30
-         'IS2D' , 'IS2D' , 'IS3D' , 'IS3D' , 'ONM1' , 'ONM2' , 'ONRO' , 'QDME' , 'QDME' , 'QDME' ,  &                    !  31 -  40
-         'QDPL' , 'QUAD' , 'QUAD' , 'SHEA' , 'SLOT' , 'SLOT' , 'TETR' , 'TORD' , 'TRAP' , 'TRBS' ,  &                    !  41 -  50
-         'TRIA' , 'TRIA' , 'TRIA' , 'TRME' , 'TRPL' , 'TWIS' , 'WEDG' , 'DUMM' , 'DUM1' , 'DUM2' ,  &                    !  51 -  60
-         'DUM3' , 'DUM4' , 'DUM5' , 'DUM6' , 'DUM7' , 'DUM8' , 'DUM9' , 'TRIA' , 'TRIM' , 'DAMP' ,  &                    !  61 -  70
-         'ELAS' , 'MASS' , 'DAMP' , 'ELAS' , 'MASS' , 'ONM1' , 'ONM2' , 'ONRO' , 'IHEX' , 'IHEX' ,  &                    !  71 -  80
-         'IHEX' , 'TRAP' , 'TRIA' , 'QUAD' , 'TRIA' , 'QDME' , 'HEX8' , 'HEX2' , 'TRPL' , 'TRSH' ,  &                    !  81 -  90
-         'RIGD' , 'RIGD' , 'RIGD' , 'BEAM' , 'FTUB' , 'HEXA' , 'PENT' , 'QUAD' , 'TRIA' , 'LOOF' ,  &                    !  91 - 100
-         'LOOF' , 'LOOF' , 'BEND' , 'GAP ' , 'QUAD' , 'TRIA' , 'ELBO' , 'FHEX' , 'FHEX' , 'FTET' ,  &                    ! 101 - 110
-         'FWED' , 'PCAX' , 'AABS' , 'BUSH' , 'BUSH' , 'DAMP' , 'HBDY' , 'QUAD' , 'TRIA' , 'WELD' ,  &                    ! 111 - 120
-         'HACA' , 'HACB' , 'QUAD' , 'QUAD' , 'RAC2' , 'RAC3' , 'TRIA' , 'RBAR' , 'BAR ' , 'RBE1' ,  &                    ! 121 - 130
-         'BE1 ' , 'RBE2' , 'BE2 ' , 'RROD' , 'ROD ' , 'RTRP' , 'TRPL' , 'QUAD' , 'TRIA' , '    ' ,  &                    ! 131 - 140
-         '    ' , '    ' , '    ' , '    ' , '    ' , '    ' , '    ' , '    ' , '    ' , '    ' ,  &                    ! 141 - 150
-         '    ' , '    ' , '    ' , '    ' , '    ' , '    ' , '    ' , '    ' , '    ' , '    '    /                    ! 151 - 160
+      /  4HNDDA , 4HPC   , 4HPC*  , 4HELAS , 4HELAS , 4HDAMP , 4HDAMP , 4HMASS , 4HMASS , 4HROD  ,  &                    !   1 -  10
+         4HTUBE , 4HVISC , 4HDAMP , 4HDAMP , 4HELAS , 4HELAS , 4HMASS , 4HMASS , 4HAXIF , 4HAXIF ,  &                    !  11 -  20
+         4HAXIF , 4HBAR  , 4HCONE , 4HFLUI , 4HFLUI , 4HFLUI , 4HHBDY , 4HHEXA , 4HHEXA , 4HHTTR ,  &                    !  21 -  30
+         4HIS2D , 4HIS2D , 4HIS3D , 4HIS3D , 4HONM1 , 4HONM2 , 4HONRO , 4HQDME , 4HQDME , 4HQDME ,  &                    !  31 -  40
+         4HQDPL , 4HQUAD , 4HQUAD , 4HSHEA , 4HSLOT , 4HSLOT , 4HTETR , 4HTORD , 4HTRAP , 4HTRBS ,  &                    !  41 -  50
+         4HTRIA , 4HTRIA , 4HTRIA , 4HTRME , 4HTRPL , 4HTWIS , 4HWEDG , 4HDUMM , 4HDUM1 , 4HDUM2 ,  &                    !  51 -  60
+         4HDUM3 , 4HDUM4 , 4HDUM5 , 4HDUM6 , 4HDUM7 , 4HDUM8 , 4HDUM9 , 4HTRIA , 4HTRIM , 4HDAMP ,  &                    !  61 -  70
+         4HELAS , 4HMASS , 4HDAMP , 4HELAS , 4HMASS , 4HONM1 , 4HONM2 , 4HONRO , 4HIHEX , 4HIHEX ,  &                    !  71 -  80
+         4HIHEX , 4HTRAP , 4HTRIA , 4HQUAD , 4HTRIA , 4HQDME , 4HHEX8 , 4HHEX2 , 4HTRPL , 4HTRSH ,  &                    !  81 -  90
+         4HRIGD , 4HRIGD , 4HRIGD , 4HBEAM , 4HFTUB , 4HHEXA , 4HPENT , 4HQUAD , 4HTRIA , 4HLOOF ,  &                    !  91 - 100
+         4HLOOF , 4HLOOF , 4HBEND , 4HGAP  , 4HQUAD , 4HTRIA , 4HELBO , 4HFHEX , 4HFHEX , 4HFTET ,  &                    ! 101 - 110
+         4HFWED , 4HPCAX , 4HAABS , 4HBUSH , 4HBUSH , 4HDAMP , 4HHBDY , 4HQUAD , 4HTRIA , 4HWELD ,  &                    ! 111 - 120
+         4HHACA , 4HHACB , 4HQUAD , 4HQUAD , 4HRAC2 , 4HRAC3 , 4HTRIA , 4HRBAR , 4HBAR  , 4HRBE1 ,  &                    ! 121 - 130
+         4HBE1  , 4HRBE2 , 4HBE2  , 4HRROD , 4HROD  , 4HRTRP , 4HTRPL , 4HQUAD , 4HTRIA , 4H     ,  &                    ! 131 - 140
+         4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4H     ,  &                    ! 141 - 150
+         4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4H        /                    ! 151 - 160
 
 ! CWELD probably should not be in this list, but it was retained rather than deal with correcting all the places in the code which
 ! reference elements by number (e.g., rigid elements).
 
       DATA WYPE                                                                                     &
-      /  'TA '  , '   '  , '   '  , '1  '  , '2  '  , '1  '  , '2  '  , '1  '  , '2  '  , '   '  ,  &                    !   1 -  10
-         '   '  , '   '  , '3  '  , '4  '  , '3  '  , '4  '  , '3  '  , '4  '  , '2  '  , '3  '  ,  &                    !  11 -  20
-         '4  '  , '   '  , 'AX '  , 'D2 '  , 'D3 '  , 'D4 '  , '   '  , '1  '  , '2  '  , 'I2 '  ,  &                    !  21 -  30
-         '4  '  , '8  '  , '8  '  , '20 '  , '   '  , '   '  , 'D  '  , 'M  '  , 'M1 '  , 'M2 '  ,  &                    !  31 -  40
-         'T  '  , '1  '  , '2  '  , 'R  '  , '3  '  , '4  '  , 'A  '  , 'RG '  , 'RG '  , 'C  '  ,  &                    !  41 -  50
-         '1  '  , '2  '  , 'RG '  , 'M  '  , 'T  '  , 'T  '  , 'E  '  , 'Y  '  , '   '  , '   '  ,  &                    !  51 -  60
-         '   '  , '   '  , '   '  , '   '  , '   '  , '   '  , '   '  , 'X6 '  , '6  '  , '4* '  ,  &                    !  61 -  70
-         '4* '  , '4* '  , '2* '  , '2* '  , '2* '  , '*  '  , '*  '  , 'D* '  , '1  '  , '2  '  ,  &                    !  71 -  80
-         '3  '  , 'AX '  , 'AX '  , 'TS '  , 'TS '  , 'M3 '  , '   '  , '0  '  , 'T1 '  , 'L  '  ,  &                    !  81 -  90
-         '1  '  , '2  '  , 'R  '  , '   '  , 'E  '  , '   '  , 'A  '  , '4  '  , '3  '  , '3  '  ,  &                    !  91 - 100
-         '6  '  , '8  '  , '   '  , '   '  , '8  '  , '6  '  , 'W  '  , '1  '  , '2  '  , 'RA '  ,  &                    ! 101 - 110
-         'GE '  , '   '  , 'F  '  , '   '  , '1D '  , '5  '  , 'P  '  , 'R  '  , 'R  '  , '   '  ,  &                    ! 111 - 120
-         'B  '  , 'R  '  , '   '  , 'X  '  , 'D  '  , 'D  '  , 'X  '  , '   '  , '   '  , '   '  ,  &                    ! 121 - 130
-         '   '  , '   '  , '   '  , '   '  , '   '  , 'LT '  , 'T  '  , '4K '  , '3K '  , '   '  ,  &                    ! 131 - 140
-         '   '  , '   '  , '   '  , '   '  , '   '  , '   '  , '   '  , '   '  , '   '  , '   '  ,  &                    ! 141 - 150
-         '   '  , '   '  , '   '  , '   '  , '   '  , '   '  , '   '  , '   '  , '   '  , '   '     /                    ! 151 - 160
+      /  4HTA   , 4H     , 4H     , 4H1    , 4H2    , 4H1    , 4H2    , 4H1    , 4H2    , 4H     ,  &                    !   1 -  10
+         4H     , 4H     , 4H3    , 4H4    , 4H3    , 4H4    , 4H3    , 4H4    , 4H2    , 4H3    ,  &                    !  11 -  20
+         4H4    , 4H     , 4HAX   , 4HD2   , 4HD3   , 4HD4   , 4H     , 4H1    , 4H2    , 4HI2   ,  &                    !  21 -  30
+         4H4    , 4H8    , 4H8    , 4H20   , 4H     , 4H     , 4HD    , 4HM    , 4HM1   , 4HM2   ,  &                    !  31 -  40
+         4HT    , 4H1    , 4H2    , 4HR    , 4H3    , 4H4    , 4HA    , 4HRG   , 4HRG   , 4HC    ,  &                    !  41 -  50
+         4H1    , 4H2    , 4HRG   , 4HM    , 4HT    , 4HT    , 4HE    , 4HY    , 4H     , 4H     ,  &                    !  51 -  60
+         4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4HX6   , 4H6    , 4H4*   ,  &                    !  61 -  70
+         4H4*   , 4H4*   , 4H2*   , 4H2*   , 4H2*   , 4H*    , 4H*    , 4HD*   , 4H1    , 4H2    ,  &                    !  71 -  80
+         4H3    , 4HAX   , 4HAX   , 4HTS   , 4HTS   , 4HM3   , 4H     , 4H0    , 4HT1   , 4HL    ,  &                    !  81 -  90
+         4H1    , 4H2    , 4HR    , 4H     , 4HE    , 4H     , 4HA    , 4H4    , 4H3    , 4H3    ,  &                    !  91 - 100
+         4H6    , 4H8    , 4H     , 4H     , 4H8    , 4H6    , 4HW    , 4H1    , 4H2    , 4HRA   ,  &                    ! 101 - 110
+         4HGE   , 4H     , 4HF    , 4H     , 4H1D   , 4H5    , 4HP    , 4HR    , 4HR    , 4H     ,  &                    ! 111 - 120
+         4HB    , 4HR    , 4H     , 4HX    , 4HD    , 4HD    , 4HX    , 4H     , 4H     , 4H     ,  &                    ! 121 - 130
+         4H     , 4H     , 4H     , 4H     , 4H     , 4HLT   , 4HT    , 4H4K   , 4H3K   , 4H     ,  &                    ! 131 - 140
+         4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4H     ,  &                    ! 141 - 150
+         4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4H     , 4H        /                    ! 151 - 160
 
       DATA ME/                                                                                      &
            0    ,   0    ,   0    ,  34    ,  34    ,  34    ,  34    ,  34    ,  34    ,  24    ,  &                    !   1 -  10
@@ -189,39 +189,6 @@
 !    NCON = Number of connections per element (see subroutine ELTYPE)
 !    IFLD = Field number of first connection.
 
-      END BLOCK DATA BANDIT_BLOCK_DATA
+      SAVE
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      END MODULE BANDIT_BLOCK_DATA

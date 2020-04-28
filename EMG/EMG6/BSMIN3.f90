@@ -155,18 +155,6 @@
 
  8902 FORMAT(' Row ',I2,/,9(1ES14.6))
 
- 9100 FORMAT(14X,'Check on strain-displacement matrix BS for transverse shear portion of the element in subr BCHECK'/)
-
- 9101 FORMAT(56X,'S T R A I N S'/,50X,A,)
-
- 9102 FORMAT(54X,'Gxz            Gyz')
-
- 9103 FORMAT(7X,'Element displacements consistent with:')
-
- 9104 FORMAT(7X,'---------------------------------------')
-
-90003 FORMAT(1X,3(1ES19.11))
-
 ! **********************************************************************************************************************************
 
       END SUBROUTINE BSMIN3

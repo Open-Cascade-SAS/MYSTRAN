@@ -148,16 +148,6 @@
 
  8902 FORMAT(' Row ',I2,/,9(1ES14.6))
 
- 9100 FORMAT(26X,'Check on strain-displacement matrix BB for bending portion of the element in subr BCHECK'/)
-
- 9101 FORMAT(63X,'S T R A I N S'/,61X,A,)
-
- 9102 FORMAT(53X,'Cxx            Cyy            Cxy')
-
- 9103 FORMAT(7X,'Element displacements consistent with:')
-
- 9104 FORMAT(7X,'---------------------------------------')
-
 ! **********************************************************************************************************************************
                                                      
       END SUBROUTINE BBMIN3
